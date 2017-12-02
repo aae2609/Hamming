@@ -5,6 +5,9 @@
 G = (I, P)
 H = (P.t, I)
 
+H = (A, I_)
+G = (I, A.t)
+
 """
 
 import scipy.stats as st
@@ -33,8 +36,17 @@ class Hamming():
                         and q * (self.n - self.k) > self.k:
                     self.h = h
                     self.q = q
-                    # print('h=' + str(h) + '\tqnt=' + str(q))
                     break
+
+    def create_str_H(self):
+        self.H = [bin(i)[2:].zfill(self.n-self.k) for i in range(self.n)]
+        self.show_matr(self.H)
+
+
+    def create_str_G_with_H(self):
+        A = [s for s in self.H]
+
+
 
     def create_str_G(self):
         I = [bin(2 ** (i))[2:].zfill(self.k) for i in range(self.k)][::-1]
@@ -87,11 +99,12 @@ class Hamming():
                 out.writerow((i, str(str_word), codeword, ind_error, bin_error, codeword_err))
 
     def run(self):
-        self.choose_h_q()
-        self.create_str_G()
-        clean_words = self.create_data_iter()
-        errors = self.create_error_iter()
-        self.make_data_and_write(clean_words, errors)
+        self.create_str_H()
+        # self.create_str_G()
+        # clean_words = self.create_data_iter()
+        # errors = self.create_error_iter()
+        # self.make_data_and_write(clean_words, errors)
+
 
 
 def main():
