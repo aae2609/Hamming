@@ -75,7 +75,7 @@ class Hamming(object):
 
     def run(self):
         self.G = self.get_matrix('g.txt')
-        self.H = self.get_matrix('h.txt')
+        # self.H = self.get_matrix('h.txt')
         clean_words = self.create_data_iter()
         errors = self.create_error_iter()
         self.make_data_and_write(clean_words, errors)

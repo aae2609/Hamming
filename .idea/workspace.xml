@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e24f353-ebfe-443c-a994-86d0abbef427" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/hemming.iml" afterPath="$PROJECT_DIR$/.idea/hemming.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/g.txt" afterPath="$PROJECT_DIR$/g.txt" />
       <change beforePath="$PROJECT_DIR$/h.txt" afterPath="$PROJECT_DIR$/h.txt" />
-      <change beforePath="$PROJECT_DIR$/hamming.txt" afterPath="$PROJECT_DIR$/hamming.txt" />
       <change beforePath="$PROJECT_DIR$/src.py" afterPath="$PROJECT_DIR$/src.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,7 +20,7 @@
         <entry file="file://$PROJECT_DIR$/src.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="464">
-              <caret line="75" column="18" lean-forward="false" selection-start-line="75" selection-start-column="18" selection-end-line="75" selection-end-column="18" />
+              <caret line="78" column="42" lean-forward="true" selection-start-line="78" selection-start-column="42" selection-end-line="78" selection-end-column="42" />
               <folding>
                 <element signature="e#113#137#0" expanded="true" />
               </folding>
@@ -237,7 +234,14 @@
       <option name="project" value="LOCAL" />
       <updated>1512318299274</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Now G and H are pulled from .txt">
+      <created>1512320462032</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1512320462032</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -251,10 +255,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="260" y="47" width="1920" height="1002" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12552084" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32997763" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32997763" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32885906" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -278,7 +283,8 @@
     <MESSAGE value="Added func for create H" />
     <MESSAGE value="Now G and H are pulled from .txt, some problem in encode function." />
     <MESSAGE value="Now G and H are pulled from .txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Now G and H are pulled from .txt" />
+    <MESSAGE value="New correct g.txt, h.txt, hamming.txt" />
+    <option name="LAST_COMMIT_MESSAGE" value="New correct g.txt, h.txt, hamming.txt" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -445,7 +451,7 @@
     <entry file="file://$PROJECT_DIR$/src.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="464">
-          <caret line="75" column="18" lean-forward="false" selection-start-line="75" selection-start-column="18" selection-end-line="75" selection-end-column="18" />
+          <caret line="78" column="42" lean-forward="true" selection-start-line="78" selection-start-column="42" selection-end-line="78" selection-end-column="42" />
           <folding>
             <element signature="e#113#137#0" expanded="true" />
           </folding>
