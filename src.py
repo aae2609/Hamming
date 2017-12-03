@@ -1,24 +1,23 @@
 """
-1x20 20x25 = 1x25
+(31, 26) Hamming code
+
+data   G    codeword
+1x26 26x31 = 1x31
 1*k  k*n     1*n
 
-G = (I, P)
-H = (P.t, I)
+H = (I, P)
+G = (P.t, I)
 
-H = (A, I_)
-G = (I, A.t)
 """
-import numpy as np
 import scipy.stats as st
 import csv
-import math
 
 
 class Hamming(object):
 
     def __init__(self, n, k, file_name='hamming.txt', size_of_sample=100):
         self.G = []  # Generative matrix of code
-        self.H = []  # Parity check matrix
+        # self.H = []  # Parity check matrix
         self.n = n  # codeword length
         self.k = k  # data length
         self.file_name = file_name  # where data will been written
@@ -48,7 +47,8 @@ class Hamming(object):
         codeword = ''.join([str(bin(int(i, 2) & int(str_data, 2)).count('1') % 2) for i in self.G])
         return codeword
 
-    def add_error(self, codeword, num_err):
+    @staticmethod
+    def add_error(codeword, num_err):
         return codeword[:num_err] + str(1 - int(codeword[num_err])) + codeword[num_err + 1:]
 
     def make_data_and_write(self, clean_words, errors):
@@ -70,6 +70,7 @@ class Hamming(object):
         M = []
         for line in file:
             M.append(line[:-2])
+
         return M
 
     def run(self):
