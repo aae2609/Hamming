@@ -7,59 +7,25 @@ H = (P.t, I)
 
 H = (A, I_)
 G = (I, A.t)
-
 """
-
+import numpy as np
 import scipy.stats as st
 import csv
+import math
 
 
-class Hamming():
+class Hamming(object):
 
-    def __init__(self, n, k, file_name='hamming.txt', h=0, q=0, generate_h_q=True, size_of_sample=100):
-        self.G = []  # generative matrix of code
+    def __init__(self, n, k, file_name='hamming.txt', size_of_sample=100):
+        self.G = []  # Generative matrix of code
+        self.H = []  # Parity check matrix
         self.n = n  # codeword length
         self.k = k  # data length
         self.file_name = file_name  # where data will been written
         self.size_of_sample = size_of_sample  # quantity words in sample
 
-        if (generate_h_q):
-            self.choose_h_q()
-        else:
-            self.h = h  # step of diviation in kernel in G
-            self.q = q  # quantity of using bits
-
-    def choose_h_q(self):
-        for h in range(self.k):
-            for q in range(self.k):
-                if ((self.n - self.k - 1) * h + q) == self.k \
-                        and q * (self.n - self.k) > self.k:
-                    self.h = h
-                    self.q = q
-                    break
-
-    def create_str_H(self):
-        self.H = [bin(i)[2:].zfill(self.n-self.k) for i in range(self.n)]
-        self.show_matr(self.H)
-
-
-    def create_str_G_with_H(self):
-        A = [s for s in self.H]
-
-
-
-    def create_str_G(self):
-        I = [bin(2 ** (i))[2:].zfill(self.k) for i in range(self.k)][::-1]
-        P = []
-        for i in range(self.n - self.k):
-            a = sum([2 ** (self.h * i + j) for j in range(self.q)])
-            P.append(bin(a)[2:].zfill(self.k))
-        P.reverse()
-        I.extend(P)
-        self.G = I
-        self.show_matr(I)
-
-    def show_matr(self, M):
+    @staticmethod
+    def show_matrix(M):
         for s in M:
             print(s)
 
@@ -70,11 +36,11 @@ class Hamming():
         return bin(2 ** id_err)[2:].zfill(self.n)[::-1]
 
     def create_error_iter(self):
-        uniform = st.uniform(loc=0, scale=self.n)
+        uniform = st.uniform(loc=0, scale=self.n-1)
         return uniform.rvs(size=self.size_of_sample)
 
     def create_data_iter(self):
-        uniform = st.uniform(loc=0, scale=2 ** (self.k))
+        uniform = st.uniform(loc=0, scale=2**self.k)
         return uniform.rvs(size=self.size_of_sample)
 
     def encode_hamming(self, num):
@@ -83,7 +49,7 @@ class Hamming():
         return codeword
 
     def add_error(self, codeword, num_err):
-        return codeword[:num_err] + str(1 - int(codeword[num_err])) + codeword[num_err+1:]
+        return codeword[:num_err] + str(1 - int(codeword[num_err])) + codeword[num_err + 1:]
 
     def make_data_and_write(self, clean_words, errors):
         with open('hamming.txt', 'w', newline='\n') as file:
@@ -98,17 +64,24 @@ class Hamming():
 
                 out.writerow((i, str(str_word), codeword, ind_error, bin_error, codeword_err))
 
-    def run(self):
-        self.create_str_H()
-        # self.create_str_G()
-        # clean_words = self.create_data_iter()
-        # errors = self.create_error_iter()
-        # self.make_data_and_write(clean_words, errors)
+    @staticmethod
+    def get_matrix(filename):
+        file = open(filename, 'r', newline='\n')
+        M = []
+        for line in file:
+            M.append(line[:-2])
+        return M
 
+    def run(self):
+        self.G = self.get_matrix('g.txt')
+        self.H = self.get_matrix('h.txt')
+        clean_words = self.create_data_iter()
+        errors = self.create_error_iter()
+        self.make_data_and_write(clean_words, errors)
 
 
 def main():
-    encoder = Hamming(n=36, k=30, generate_h_q=True, size_of_sample=2**16)
+    encoder = Hamming(n=31, k=26, size_of_sample=2 ** 16)
     encoder.run()
 
 
