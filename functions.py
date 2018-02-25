@@ -20,6 +20,3 @@ def train_input_fn(features, labels, batch_size):
     dataset = dataset.shuffle(buffer_size=1000).repeat(count=None).batch(batch_size)
     return dataset.make_one_shot_iterator().get_next()
 
-
-if __name__ == '__main__':
-    pass
