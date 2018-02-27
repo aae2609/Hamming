@@ -1,3 +1,5 @@
+import pandas as pd
+
 
 TRAIN_PATH = "/content/drive/Hamming/dataset_files/hamming.txt"
 
