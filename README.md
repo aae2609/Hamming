@@ -1,1 +1,1 @@
-# Hamming (n, k) code encoder.
+# Hamming (31, 26) code encoder.
