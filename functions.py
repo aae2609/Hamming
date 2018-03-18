@@ -15,7 +15,7 @@ def loss_hamming(y, y_pred):
 
 
 def load_data():
-	data = pd.read_csv(functions.TRAIN_PATH, sep=';', names=functions.COLUMN_NAMES)
+	data = pd.read_csv(TRAIN_PATH, sep=';', names=COLUMN_NAMES)
 
 	# make features
 	data['dec_defective_codeword'] = data['defective_codeword'][:].apply(lambda x: int(x, 2))
