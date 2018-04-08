@@ -58,12 +58,11 @@ class Hamming(object):
             for i, word in enumerate(clean_words):
                 str_word = self.int_to_bin_str(int(word))
                 codeword = self.encode_hamming(int(word))
-                ind_error = int(errors[i])
-                bin_error = self.err_to_bin_str(int(errors[i]))
-                codeword_err = self.add_error(codeword, ind_error)
-
-                out.writerow((i, str(str_word), codeword, ind_error, bin_error, codeword_err))
-
+                for j in range(0, 31):
+                    ind_error = j
+                    bin_error = self.err_to_bin_str(j)
+                    codeword_err = self.add_error(codeword, ind_error)
+                    out.writerow((i, str(str_word), codeword, ind_error, bin_error, codeword_err))
     @staticmethod
     def get_matrix(filename):
         file = open(filename, 'r', newline='\n')
