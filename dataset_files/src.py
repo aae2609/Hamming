@@ -55,14 +55,15 @@ class Hamming(object):
         with open('hamming.txt', 'w', newline='\n') as file:
             out = csv.writer(file, delimiter=';')
             # fieldnames = ('id', 'plainword', 'codeword', 'id_error', 'bin_error', 'defective_codeword')
-            for i, word in enumerate(clean_words):
+            for word in clean_words:
                 str_word = self.int_to_bin_str(int(word))
                 codeword = self.encode_hamming(int(word))
+                out.writerow((str(str_word), codeword, -1, '0' * 31, codeword))
                 for j in range(0, 31):
                     ind_error = j
                     bin_error = self.err_to_bin_str(j)
                     codeword_err = self.add_error(codeword, ind_error)
-                    out.writerow((i, str(str_word), codeword, ind_error, bin_error, codeword_err))
+                    out.writerow((str(str_word), codeword, ind_error, bin_error, codeword_err))
     @staticmethod
     def get_matrix(filename):
         file = open(filename, 'r', newline='\n')
