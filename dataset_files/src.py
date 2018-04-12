@@ -51,8 +51,8 @@ class Hamming(object):
     def add_error(codeword, num_err):
         return codeword[:num_err] + str(1 - int(codeword[num_err])) + codeword[num_err + 1:]
 
-    def make_data_and_write(self, clean_words, errors):
-        with open('hamming.txt', 'w', newline='\n') as file:
+    def make_data_and_write(self, clean_words, errors, filename):
+        with open(filename, 'w', newline='\n') as file:
             out = csv.writer(file, delimiter=';')
             # fieldnames = ('id', 'plainword', 'codeword', 'id_error', 'bin_error', 'defective_codeword')
             for word in clean_words:
@@ -73,18 +73,19 @@ class Hamming(object):
 
         return M
 
-    def run(self):
+    def run(self, filename):
         self.G = self.get_matrix('g.txt')
         # self.H = self.get_matrix('h.txt')
         clean_words = self.create_data_iter()
         errors = self.create_error_iter()
-        self.make_data_and_write(clean_words, errors)
+        self.make_data_and_write(clean_words, errors, filename)
 
 
 def main():
     encoder = Hamming(n=31, k=26, size_of_sample=2 ** 16)
-    encoder.run()
-
+    encoder.run('hamming.txt')
+    encoder = Hamming(n=31, k=26, size_of_sample=2 ** 11)
+    encoder.run('hamming_small.txt')
 
 if __name__ == '__main__':
     main()
