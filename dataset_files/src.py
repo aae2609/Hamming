@@ -12,6 +12,8 @@ G = (P.t, I)
 import scipy.stats as st
 import csv
 
+from random import sample
+
 
 class Hamming(object):
 
@@ -39,14 +41,18 @@ class Hamming(object):
         return uniform.rvs(size=self.size_of_sample)
 
     def create_data_iter(self):
-        uniform = st.uniform(loc=0, scale=2**self.k)
-        return uniform.rvs(size=self.size_of_sample)
+        return sample(range(2**self.k), self.size_of_sample)
+#         uniform = st.uniform(loc=0, scale=2**self.k)
+#         return uniform.rvs(size=self.size_of_sample)
 
     def encode_hamming(self, num):
         str_data = self.int_to_bin_str(num)
         codeword = ''.join([str(bin(int(i, 2) & int(str_data, 2)).count('1') % 2) for i in self.G])
         return codeword
 
+    def choose_bits_to_spoil(self, count):
+        return sample(range(32), count)
+    
     @staticmethod
     def add_error(codeword, num_err):
         return codeword[:num_err] + str(1 - int(codeword[num_err])) + codeword[num_err + 1:]
@@ -58,8 +64,11 @@ class Hamming(object):
             for word in clean_words:
                 str_word = self.int_to_bin_str(int(word))
                 codeword = self.encode_hamming(int(word))
-                out.writerow((str(str_word), codeword, -1, '0' * 31, codeword))
-                for j in range(0, 31):
+                err_list = self.choose_bits_to_spoil(20)
+                for j in err_list:
+                    if j == 31:
+                        out.writerow((str(str_word), codeword, -1, '0' * 31, codeword))
+                        continue
                     ind_error = j
                     bin_error = self.err_to_bin_str(j)
                     codeword_err = self.add_error(codeword, ind_error)
