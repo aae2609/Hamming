@@ -7,9 +7,10 @@ data   G    codeword
 
 H = (I, P)
 G = (P.t, I)
-
 """
+
 import scipy.stats as st
+import pandas as pd
 import csv
 
 from random import sample
@@ -51,50 +52,74 @@ class Hamming(object):
         return codeword
 
     def choose_bits_to_spoil(self, count):
-        return sample(range(32), count)
+        return sample(range(self.n + 1), count)
     
     @staticmethod
     def add_error(codeword, num_err):
         return codeword[:num_err] + str(1 - int(codeword[num_err])) + codeword[num_err + 1:]
 
-    def make_data_and_write(self, clean_words, errors, filename):
+    def make_data_and_write(self, clean_words, count_errors, filename):
         with open(filename, 'w', newline='\n') as file:
             out = csv.writer(file, delimiter=';')
             # fieldnames = ('id', 'plainword', 'codeword', 'id_error', 'bin_error', 'defective_codeword')
             for word in clean_words:
                 str_word = self.int_to_bin_str(int(word))
                 codeword = self.encode_hamming(int(word))
-                err_list = self.choose_bits_to_spoil(20)
+                err_list = self.choose_bits_to_spoil(count_errors)
                 for j in err_list:
-                    if j == 31:
-                        out.writerow((str(str_word), codeword, -1, '0' * 31, codeword))
+                    if j == self.n:
+                        out.writerow((str(str_word), codeword, -1, '0' * self.n, codeword))
                         continue
                     ind_error = j
                     bin_error = self.err_to_bin_str(j)
                     codeword_err = self.add_error(codeword, ind_error)
                     out.writerow((str(str_word), codeword, ind_error, bin_error, codeword_err))
+
     @staticmethod
     def get_matrix(filename):
         file = open(filename, 'r', newline='\n')
         M = []
         for line in file:
-            M.append(line[:-2])
-
+            M.append(line[:-1])
         return M
 
-    def run(self, filename):
-        self.G = self.get_matrix('g.txt')
+    @staticmethod
+    def get_matrix_from_csv(filename):
+        M = pd.read_csv(filename, header=None)
+        M = [''.join(line) for line in M.values.T.astype(str)]
+        return M
+
+    def run(self, filename, count_errors):
+        self.G = self.get_matrix_from_csv('g_16_11_nonsystematic.csv')
+        # self.G = self.get_matrix('g_15_11.txt')
+
         # self.H = self.get_matrix('h.txt')
         clean_words = self.create_data_iter()
-        errors = self.create_error_iter()
-        self.make_data_and_write(clean_words, errors, filename)
+        # errors = self.create_error_iter()
+        self.make_data_and_write(clean_words, count_errors, filename)
+
+
+def write_for_maple(string):
+    print('[', ', '.join(string), ']')
 
 
 def main():
-    encoder = Hamming(n=31, k=26, size_of_sample=2 ** 16)
-    encoder.run('hamming.txt')
-    encoder = Hamming(n=31, k=26, size_of_sample=2 ** 11)
-    encoder.run('hamming_small.txt')
+    # encoder = Hamming(n=31, k=26, size_of_sample=2 ** 16)
+    # encoder.run('hamming.txt', count_errors=32)
+
+    encoder = Hamming(n=15, k=11, size_of_sample=2 ** 11)
+    encoder.run('hamming_15_11_all.txt', count_errors=16)
+
+    encoder = Hamming(n=15, k=11, size_of_sample=2 ** 9)
+    encoder.run('hamming_15_11.txt', count_errors=10)
+
+    print('Done.')
+
 
 if __name__ == '__main__':
     main()
+
+    # write_for_maple('10011101111')
+    # write_for_maple('1011100111101111')
+
+
